@@ -1,7 +1,7 @@
 import sha256 from "sha256";
 import config from "../config";
 import UserSchema from "../database/Schemas/UserSchema";
-import { AuthI } from "../interfaces/auth.interface";
+import { AuthI } from "../interfaces/Auth.interface";
 
 const Auth: AuthI = {
     tokens: new Map(),

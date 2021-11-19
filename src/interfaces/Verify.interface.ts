@@ -7,5 +7,8 @@ type middlewareFunction = (
 ) => void;
 
 export interface VerifyI {
+    // codes: Map<number, string>;
     generateCode(req: Request, res: Response, next: NextFunction): void;
+    checkCode(req: Request, res: Response, next: NextFunction): void;
+    checkUser(req: Request, res: Response, next: NextFunction): void;
 }

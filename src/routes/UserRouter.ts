@@ -5,10 +5,16 @@ import Verify from "../middlewares/VerifyMiddleware";
 
 const router = express.Router();
 
-router.get("/", Auth.checkToken, UserController.checkUser);
+router.get("/", Auth.checkToken, Verify.checkUser, UserController.checkUser);
 router.post("/login", Auth.generateToken, UserController.login);
 router.post("/register", UserController.register);
 router.get("/logout", Auth.logout);
-router.post("/verify", Verify.generateCode, UserController.sendEmail);
+router.get(
+    "/verify",
+    Auth.checkToken,
+    Verify.generateCode,
+    UserController.getVerify
+);
+router.patch("/verify", Verify.checkCode, UserController.setVerify);
 
 export default router;

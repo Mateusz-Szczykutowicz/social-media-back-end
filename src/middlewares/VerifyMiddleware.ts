@@ -20,12 +20,13 @@ class Verify implements VerifyI {
     }
 
     public async generateCode(req: Request, res: Response, next: NextFunction) {
-        const { id } = req.body;
+        const { id } = req.body.secure;
         const code: number = render(100000, 999999);
         Verify.codes.set(code, id);
         Verify.deleteCode(5, code);
         req.body.secure = {};
         req.body.secure.code = code;
+        console.log("Verify.codes :>> ", Verify.codes);
         next();
     }
 
@@ -37,6 +38,8 @@ class Verify implements VerifyI {
         }
         const code = req.body.code * 1;
         const id = Verify.codes.get(code);
+        console.log("id :>> ", id);
+        console.log("code >> ", code);
         if (!id) {
             return res
                 .status(409)

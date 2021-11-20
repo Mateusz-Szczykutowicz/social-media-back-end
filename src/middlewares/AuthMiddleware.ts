@@ -1,11 +1,12 @@
+import { NextFunction, Request, Response } from "express";
 import sha256 from "sha256";
 import config from "../config";
 import UserSchema from "../database/Schemas/UserSchema";
 import { AuthI } from "../interfaces/Auth.interface";
 
-const Auth: AuthI = {
-    tokens: new Map(),
-    generateToken: async (req, res, next) => {
+class Auth implements AuthI {
+    private static tokens: Map<string | string[], string> = new Map();
+    async generateToken(req: Request, res: Response, next: NextFunction) {
         if (!req.body.login || !req.body.password) {
             return res
                 .status(400)
@@ -29,11 +30,13 @@ const Auth: AuthI = {
             `$!${Math.random()}+${id}-!${config.secure.token_salt}`
         );
         Auth.tokens.set(token, id);
-        req.body.token = token;
+        req.body.secure = {};
+        req.body.secure.token = token;
         Auth.clearToken(token, 30);
         next();
-    },
-    checkToken: (req, res, next) => {
+    }
+
+    public checkToken(req: Request, res: Response, next: NextFunction) {
         if (!req.headers.token) {
             return res
                 .status(400)
@@ -43,17 +46,20 @@ const Auth: AuthI = {
         if (!Auth.tokens.get(token)) {
             return res
                 .status(401)
-                .json({ message: "You must log in", status: 401 });
+                .json({ message: "You must be log in", status: 401 });
         }
-        req.body.id = Auth.tokens.get(token);
+        req.body.secure = {};
+        req.body.secure.id = Auth.tokens.get(token);
         next();
-    },
-    clearToken: (token, time) => {
+    }
+
+    private static clearToken(token: string, time: number) {
         setTimeout(() => {
             Auth.tokens.delete(token);
         }, time * 1000 * 60);
-    },
-    logout: (req, res, next) => {
+    }
+
+    public logout(req: Request, res: Response, next: NextFunction) {
         if (!req.headers.token) {
             return res
                 .status(400)
@@ -69,7 +75,7 @@ const Auth: AuthI = {
         return res
             .status(200)
             .json({ message: "Success log out", status: 200 });
-    },
-};
+    }
+}
 
-export default Auth;
+export default new Auth();

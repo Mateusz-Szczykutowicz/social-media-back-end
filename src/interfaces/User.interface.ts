@@ -6,7 +6,9 @@ type syncControllerFunction = (req: Request, res: Response) => Response;
 export interface UserControllerI {
     login: asyncControllerFunction;
     register: asyncControllerFunction;
-    checkUser: asyncControllerFunction;
+    getUserInfo: asyncControllerFunction;
     getVerify: syncControllerFunction;
     setVerify: asyncControllerFunction;
+    changePassword: asyncControllerFunction;
+    changeEmail: asyncControllerFunction;
 }

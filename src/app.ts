@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import db from "./database/serverDB";
 import userRouter from "./routes/UserRouter";
+import friendRouter from "./routes/FriendRouter";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/users", userRouter);
+app.use("/friends", friendRouter);
 
 app.get("/", (req, res) => {
     res.status(200).json({ message: "ok", status: 200 });

@@ -1,8 +1,8 @@
-import express from "express";
 import UserController from "../controllers/UserController";
 import Auth from "../middlewares/AuthMiddleware";
 import Verify from "../middlewares/VerifyMiddleware";
 
+import express from "express";
 const router = express.Router();
 
 router.get("/", Auth.checkToken, Verify.checkUser, UserController.getUserInfo);
@@ -27,6 +27,19 @@ router.patch(
     Auth.checkToken,
     Verify.checkUser,
     UserController.changeEmail
+);
+
+router.get(
+    "/recover",
+    Verify.recoverPassword,
+    Verify.generateCode,
+    UserController.recoverPassword
+);
+
+router.patch(
+    "/recover",
+    Verify.checkCode,
+    UserController.changePasswordWithCode
 );
 
 export default router;

@@ -36,4 +36,18 @@ router.patch(
     FriendController.acceptUserFriendRequest
 );
 
+router.delete(
+    "/",
+    AuthMiddleware.checkToken,
+    VerifyMiddleware.checkUser,
+    FriendController.deleteFriend
+);
+
+router.delete(
+    "/request",
+    AuthMiddleware.checkToken,
+    VerifyMiddleware.checkUser,
+    FriendController.declineRequest
+);
+
 export default router;

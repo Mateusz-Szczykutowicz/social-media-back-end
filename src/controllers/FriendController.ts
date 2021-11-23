@@ -118,6 +118,44 @@ const FriendController: FriendControllerI = {
             .status(200)
             .json({ message: "Friend request accepted", status: 200 });
     },
+    deleteFriend: async (req, res) => {
+        if (!req.body.login) {
+            return res
+                .status(400)
+                .json({ message: "Login field is empty", status: 400 });
+        }
+        const { login } = req.body;
+        const userId = req.body.secure.id;
+        const friend = await UserSchema.findOne({ login });
+        const friendId = friend.get("id");
+        await FriendSchema.deleteOne({
+            user: userId,
+            friend: friendId,
+        });
+        await FriendSchema.deleteOne({
+            friend: userId,
+            user: friendId,
+        });
+        return res.status(200).json({ message: "Friend deleted", status: 200 });
+    },
+    declineRequest: async (req, res) => {
+        if (!req.body.login) {
+            return res
+                .status(400)
+                .json({ message: "Login field is empty", status: 400 });
+        }
+        const { login } = req.body;
+        const userId = req.body.secure.id;
+        const friend = await UserSchema.findOne({ login });
+        const friendId = friend.get("id");
+        await FriendSchema.deleteOne({
+            user: friendId,
+            friend: userId,
+        });
+        return res
+            .status(200)
+            .json({ message: "Friend request declined", status: 200 });
+    },
 };
 
 export default FriendController;

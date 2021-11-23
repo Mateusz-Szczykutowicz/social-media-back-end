@@ -9,4 +9,6 @@ export interface FriendControllerI {
     getFriendRequestSent: asyncControllerFunction;
     getFriendRequestPending: asyncControllerFunction;
     acceptUserFriendRequest: asyncControllerFunction;
+    deleteFriend: asyncControllerFunction;
+    declineRequest: asyncControllerFunction;
 }

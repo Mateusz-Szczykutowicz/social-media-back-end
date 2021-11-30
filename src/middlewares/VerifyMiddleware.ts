@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import FriendSchema from "../database/Schemas/FriendSchema";
 import UserSchema from "../database/Schemas/UserSchema";
 import { VerifyI } from "../interfaces/Verify.interface";
 
@@ -33,7 +34,7 @@ class Verify implements VerifyI {
         const user = await UserSchema.findOne({ login }, "id");
         req.body.secure = {};
         req.body.secure.id = user.get("id");
-        next();
+        return next();
     }
 
     public async generateCode(req: Request, res: Response, next: NextFunction) {
@@ -41,10 +42,8 @@ class Verify implements VerifyI {
         const code: number = render(100000, 999999);
         Verify.codes.set(code, id);
         Verify.deleteCode(15, code);
-        req.body.secure = {};
         req.body.secure.code = code;
-        req.body.secure.id = id;
-        next();
+        return next();
     }
 
     public async checkCode(req: Request, res: Response, next: NextFunction) {
@@ -62,7 +61,7 @@ class Verify implements VerifyI {
         }
         req.body.secure = {};
         req.body.secure.id = id;
-        next();
+        return next();
     }
 
     public async checkUser(req: Request, res: Response, next: NextFunction) {
@@ -78,7 +77,30 @@ class Verify implements VerifyI {
                 .status(403)
                 .json({ message: "Verify account", status: 403 });
         }
-        next();
+        return next();
+    }
+
+    public async isFriend(req: Request, res: Response, next: NextFunction) {
+        const id = req.body.secure.id;
+        const { login } = req.params;
+        const friend = await UserSchema.findOne({ login });
+        if (!friend) {
+            return res.status(404).json({ message: "User does not exist" });
+        }
+        const friendRequest = await FriendSchema.findOne({
+            user: id,
+            friendId: friend.get("id"),
+        });
+        if (!friendRequest) {
+            req.body.secure.isFriend = false;
+            return next();
+        }
+        if (friendRequest.get("mutualFriend")) {
+            req.body.secure.isFriend = true;
+        } else {
+            req.body.secure.isFriend = false;
+        }
+        return next();
     }
 }
 

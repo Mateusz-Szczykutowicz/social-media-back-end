@@ -18,6 +18,9 @@ app.use(express.json());
 
 app.use("/users", userRouter);
 app.use("/friends", friendRouter);
+app.use((req, res) => {
+    res.status(404).json({ message: "Route does not exist", status: 404 });
+});
 
 app.get("/", (req, res) => {
     res.status(200).json({ message: "ok", status: 200 });

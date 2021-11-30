@@ -54,10 +54,7 @@ const UserController: UserControllerI = {
         return res.status(201).json({ message: "Added", status: 201 });
     },
     getVerify: (req, res) => {
-        const { code } = req.body.secure;
-        return res
-            .status(200)
-            .json({ message: "Code sent", status: 200, code });
+        return res.status(200).json({ message: "Code sent", status: 200 });
     },
 
     setVerify: async (req, res) => {
@@ -65,7 +62,9 @@ const UserController: UserControllerI = {
         const user = await UserSchema.findOne({ id }, "verify");
         user.set("verify", true);
         user.save();
-        return res.status(200).json({ message: "OK", status: 200 });
+        return res
+            .status(200)
+            .json({ message: "Account verified", status: 200 });
     },
     changePassword: async (req, res) => {
         if (!req.body.password || !req.body.newPassword) {
@@ -108,13 +107,15 @@ const UserController: UserControllerI = {
         return res.status(200).json({ message: "Email updated", status: 200 });
     },
     recoverPassword: async (req, res) => {
-        const { code } = req.body.secure;
-        return res
-            .status(200)
-            .json({ message: "Code sent", status: 200, code });
+        return res.status(200).json({ message: "Code sent", status: 200 });
     },
     changePasswordWithCode: async (req, res) => {
         const id = req.body.secure.id;
+        if (!req.body.password) {
+            return res
+                .status(400)
+                .json({ message: "Password field is empty", status: 400 });
+        }
         const { password } = req.body;
         const user = await UserSchema.findOne({ id }, "password");
         const newPassword = sha256(
@@ -125,6 +126,13 @@ const UserController: UserControllerI = {
         return res
             .status(200)
             .json({ message: "Password changed", status: 200 });
+    },
+    deleteAccount: async (req, res) => {
+        const id = req.body.secure.id;
+        await UserSchema.deleteOne({ id });
+        return res
+            .status(200)
+            .json({ message: "Account deleted", status: 200 });
     },
 };
 

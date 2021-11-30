@@ -37,12 +37,13 @@ class Verify implements VerifyI {
     }
 
     public async generateCode(req: Request, res: Response, next: NextFunction) {
-        const { id } = req.body.secure;
+        const id = req.body.secure.id;
         const code: number = render(100000, 999999);
         Verify.codes.set(code, id);
         Verify.deleteCode(15, code);
         req.body.secure = {};
         req.body.secure.code = code;
+        req.body.secure.id = id;
         next();
     }
 

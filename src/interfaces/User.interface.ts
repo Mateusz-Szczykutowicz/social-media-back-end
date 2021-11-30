@@ -13,4 +13,5 @@ export interface UserControllerI {
     changeEmail: asyncControllerFunction;
     recoverPassword: asyncControllerFunction;
     changePasswordWithCode: asyncControllerFunction;
+    deleteAccount: asyncControllerFunction;
 }

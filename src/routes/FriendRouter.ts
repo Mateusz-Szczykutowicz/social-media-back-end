@@ -37,17 +37,16 @@ router.patch(
 );
 
 router.delete(
-    "/",
-    AuthMiddleware.checkToken,
-    VerifyMiddleware.checkUser,
-    FriendController.deleteFriend
-);
-
-router.delete(
     "/request",
     AuthMiddleware.checkToken,
     VerifyMiddleware.checkUser,
     FriendController.declineRequest
 );
 
+router.delete(
+    "/",
+    AuthMiddleware.checkToken,
+    VerifyMiddleware.checkUser,
+    FriendController.deleteFriend
+);
 export default router;

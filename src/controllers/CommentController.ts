@@ -54,7 +54,7 @@ const CommentController: CommentControllerI = {
         if (!req.body.id || !req.body.content) {
             return res
                 .status(400)
-                .json({ message: "ID or conent field is empty", status: 400 });
+                .json({ message: "ID or content field is empty", status: 400 });
         }
         const { id, content } = req.body;
         const comment = await CommentSchema.findOne({ id, userId });

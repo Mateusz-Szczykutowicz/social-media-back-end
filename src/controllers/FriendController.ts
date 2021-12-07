@@ -49,8 +49,8 @@ const FriendController: FriendControllerI = {
             })
         ) {
             return res
-                .status(409)
-                .json({ message: "Request already sent", status: 409 });
+                .status(406)
+                .json({ message: "Request already sent", status: 406 });
         }
 
         const friendUserRequest = await FriendSchema.findOne({
@@ -154,7 +154,7 @@ const FriendController: FriendControllerI = {
         });
         if (!friendRequest) {
             return res.status(404).json({
-                message: "Request does not exist, send friend request",
+                message: "Request does not exist",
                 status: 404,
             });
         }

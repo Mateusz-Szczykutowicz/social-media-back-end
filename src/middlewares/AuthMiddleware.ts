@@ -40,7 +40,7 @@ class Auth implements AuthI {
         if (!req.headers.token) {
             return res
                 .status(400)
-                .json({ message: "Token is not exist", status: 400 });
+                .json({ message: "Token does not exist", status: 400 });
         }
         const token = req.headers.token || "";
         if (!Auth.tokens.get(token)) {
@@ -68,8 +68,8 @@ class Auth implements AuthI {
         const token = req.headers.token || "";
         if (!Auth.tokens.get(token)) {
             return res
-                .status(400)
-                .json({ message: "You no longer log in", status: 400 });
+                .status(406)
+                .json({ message: "You no longer log in", status: 406 });
         }
         Auth.tokens.delete(token);
         return res

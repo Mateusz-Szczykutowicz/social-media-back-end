@@ -14,10 +14,10 @@ const PostController: PostControllerI = {
     getOnePost: async (req, res) => {
         const userId = req.body.secure.id;
         const { id } = req.params;
-        const posts = await PostSchema.findOne({ userId, id });
+        const post = await PostSchema.findOne({ userId, id });
         return res
             .status(200)
-            .json({ message: "All user's posts", status: 200, posts });
+            .json({ message: "One user's post", status: 200, post });
     },
     getAllPostOtherUser: async (req, res) => {
         const isFriend = req.body.secure.isFriend;

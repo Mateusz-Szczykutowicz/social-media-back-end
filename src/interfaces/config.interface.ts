@@ -11,8 +11,14 @@ interface nodeMailI {
     password: String;
 }
 
+interface DBI {
+    host: string;
+    local: String;
+}
+
 export default interface configI {
     PORT: number;
     secure: secureI;
     nodeMail: nodeMailI;
+    DB: DBI;
 }

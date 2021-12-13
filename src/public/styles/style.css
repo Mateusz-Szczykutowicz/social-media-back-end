@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+
+p,
+a {
+    font-size: 16px;
+}
+
+p {
+    padding: 1px 25px;
+}
+
+.wrapper {
+    padding: 50px 10px;
+}
+
+.collection {
+    padding: 10px 5px;
+}
+
+.endpoint {
+    padding: 5px 25px;
+}
+
+.request,
+.response {
+    padding: 5px 25px;
+}

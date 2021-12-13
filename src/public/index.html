@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Social Media App</title>
+        <link rel="stylesheet" href="/public/styles/style.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Social Media App</h1>
+            <a href="/public/documentation.pdf">PDF</a>
+            <div class="collection">
+                <h2>User:</h2>
+                <div class="endpoint">
+                    <h3>Register:</h3>
+                    <p>Method: POST,</p>
+                    <p>Path: /users/register</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>
+                            Body { login, password, email, firstName,
+                            secondName?, lastName }
+                        </p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>Status: 201 { message: „Added”, status: 201 },</p>
+                        <p>
+                            Status: 400 { message: „Wrong data”, status: 400 },
+                        </p>
+                        <p>
+                            Status: 409 { message: „User exist”, status: 409 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Login:</h3>
+                    <p>Method: POST,</p>
+                    <p>Path: /users/login</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Body { login, password }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Success”, status: 200, token
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Body is empty”, status: 400
+                            },
+                        </p>
+                        <p>
+                            Status: 406 { message: „Login or password is wrong”,
+                            status: 406 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Logout:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /users/logout</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Success log out”, status:
+                            200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 406 { message: „You no longer log in”,
+                            status: 406 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get user info:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /users</p>
+                    <p>Request:</p>
+                    <div class="request"><p>Headers { token }</p></div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „User info” status: 200, user
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get verify code::</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /users/verify</p>
+                    <p>Request:</p>
+                    <div class="request"><p>Headers { token }</p></div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Code sent”, status: 200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Verify user using code:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /users/verify</p>
+                    <p>Request:</p>
+                    <div class="request"><p>Body { code }</p></div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Account verified”, status:
+                            200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Code is empty”, status: 400
+                            },
+                        </p>
+                        <p>
+                            Status: 409 { message: „Cod eis not correct”,
+                            status: 409 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Delete account:</h3>
+                    <p>Method: DELETE,</p>
+                    <p>Path: /users</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Account deleted”, status:
+                            200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Change password:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /users/password</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { password, newPassword}</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Password changed”, status:
+                            200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Password field is empty”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Change email:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /users/email</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { email }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Email updated”, status: 200
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Email field is empty”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get recover code:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /users/recover</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Body: { login }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Code sent”, status: 200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Login field is empty”,
+                            status: 400 },
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Chance password using recover code:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /users/recover</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Body: { password, code }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Password changed”, status:
+                            200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Password field is empty”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Code is empty”, status: 400
+                            },
+                        </p>
+                        <p>
+                            Status: 409 { message: „Code is not correct”,
+                            status: 409 }
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="collection">
+                <h2>Friend:</h2>
+                <div class="endpoint">
+                    <h3>Get friends list:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /friends</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend list”, status: 200,
+                            friendList },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get all sent friend request:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /friends/request/sent</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend request - sent”,
+                            status: 200, friendList },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get all friend request to accept:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /friends/request/pending</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend request - pending”,
+                            status: 200, friendList },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Send friend request:</h3>
+                    <p>Method: POST</p>
+                    <p>Path: /friends</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { login }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend request accepted”,
+                            status: 200 },
+                        </p>
+                        <p>
+                            Status: 201 { message: „Friend request sent”,
+                            status: 201 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Friend’s login field is
+                            empty”, status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 },
+                        </p>
+                        <p>
+                            Status: 406 { message: „Request already sent”,
+                            status: 406 },
+                        </p>
+                        <p>
+                            Status: 409 { message: „You cannot invite yourself”,
+                            status: 409 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Accept friend request:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /friends/request</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { login }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend request accepted”,
+                            status: 200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Login field is empty”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 },
+                        </p>
+                        <p>
+                            Status: 404 { message: „Request does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Decline friend request:</h3>
+                    <p>Method: DELETE,</p>
+                    <p>Path: /friends/request</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { login }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend request declined”,
+                            status: 200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 }
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>Delete friend:</h3>
+                    <p>Method: DELETE,</p>
+                    <p>Path: /friends</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { login }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Friend deleted”, status: 200
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Login field is empty”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="collection">
+                <h2>Post:</h2>
+                <div class="endpoint">
+                    <h3>Get all user posts:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /posts</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „All user’s posts”, status:
+                            200, posts },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get one user post:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /posts/id/:id</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „One user’s post”, status:
+                            200, post },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get other user’s post:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /posts/user/:login</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „User’s posts”, status: 200,
+                            posts },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Create new post:</h3>
+                    <p>Method: POST</p>
+                    <p>Path: /posts</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token },</p>
+                        <p>Body { isPrivate, content }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 201 { message: „Post created”, status: 201
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Content or private field is
+                            empty”, status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Modify post:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /posts</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { id, content }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Post modified”, status: 200
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Content or id field is
+                            empty”, status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Delete post:</h3>
+                    <p>Method: DELETE,</p>
+                    <p>Path: /friends</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { id }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Post deleted”, status: 200
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Id field is empty”, status:
+                            400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="collection">
+                <h2>Comment:</h2>
+                <div class="endpoint">
+                    <h3>Get all user’s comments:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /comments</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Comments”, status: 200,
+                            comments },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Get all post’s comments:</h3>
+                    <p>Method: GET,</p>
+                    <p>Path: /comments/post/:id</p>
+                    <p>Request:</p>
+                    <div class="request"></div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Post’s comments”, status:
+                            200, comments }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Create new post:</h3>
+                    <p>Method: POST,</p>
+                    <p>Path: /comments</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { postId, content }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 201 { message: „Comment added”, status: 201
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Post ID or content field is
+                            empty”, status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                        <p>
+                            Status: 404 { message: „Post does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Edit comment:</h3>
+                    <p>Method: PATCH,</p>
+                    <p>Path: /comments</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { id, content }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Comment edited”, status: 200
+                            },
+                        </p>
+                        <p>
+                            Status: 400 { message: „ID or content field is
+                            empty”, status: 400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                        <p>
+                            Status: 404 { message: „Post does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+                <div class="endpoint">
+                    <h3>Delete comment:</h3>
+                    <p>Method: DELETE,</p>
+                    <p>Path: /comments</p>
+                    <p>Request:</p>
+                    <div class="request">
+                        <p>Headers { token }</p>
+                        <p>Body { id }</p>
+                    </div>
+                    <p>Response:</p>
+                    <div class="response">
+                        <p>
+                            Status: 200 { message: „Comment deleted”, status:
+                            200 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „ID field is empty”, status:
+                            400 },
+                        </p>
+                        <p>
+                            Status: 400 { message: „Token does not exist”,
+                            status: 400 },
+                        </p>
+                        <p>
+                            Status: 401 { message: „You must be log in”, status:
+                            401 },
+                        </p>
+                        <p>
+                            Status: 403 { message: „Verify account”, status: 403
+                            },
+                        </p>
+                        <p>
+                            Status: 404 { message: „User does not exist”,
+                            status: 404 }
+                        </p>
+                        <p>
+                            Status: 404 { message: „Post does not exist”,
+                            status: 404 }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

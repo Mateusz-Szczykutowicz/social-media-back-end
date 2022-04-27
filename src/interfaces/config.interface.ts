@@ -13,7 +13,7 @@ interface nodeMailI {
 
 interface DBI {
     host: string;
-    local: String;
+    local: string;
 }
 
 export default interface configI {
